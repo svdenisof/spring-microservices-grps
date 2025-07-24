@@ -1,0 +1,32 @@
+syntax = "proto3";
+
+import "google/protobuf/wrappers.proto";
+import "google/protobuf/timestamp.proto";
+
+package scoresegment;
+
+option java_package = "ru.stas.grpc.scoresegment";
+option java_multiple_files = true;
+
+message ScoreSegmentRequest {
+    google.protobuf.UInt64Value idNumber = 1;
+}
+
+message ScoreSegmentResponse {
+    google.protobuf.UInt64Value scoreSegment = 1;
+}
+
+enum ScoreSegmentErrorCode {
+    INVALID_ID_NUMBER_VALUE = 0;
+    ID_NUMBER_CANNOT_BE_NULL = 1;
+}
+
+message ScoreSegmentExceptionResponse {
+    google.protobuf.Timestamp timestamp = 1;
+    ScoreSegmentErrorCode errorCode = 2;
+}
+
+service ScoreSegmentService {
+
+    rpc calculateScoreSegment(ScoreSegmentRequest) returns (ScoreSegmentResponse) {};
+}
